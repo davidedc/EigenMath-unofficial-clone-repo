@@ -528,7 +528,8 @@ eval_setq(void)
 	if (!issymbol(cadr(p1)))
 		stop("symbol assignment: error in symbol");
 
-	push(caddr(p1));
+    U *letMeSeeThisCaddr = caddr(p1);
+    push(caddr(p1));
 	eval();
 	p2 = pop();
 	set_binding(cadr(p1), p2);

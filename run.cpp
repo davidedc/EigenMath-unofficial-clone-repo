@@ -33,7 +33,8 @@ run(char *s)
 
 	while (1) {
 
-		n = scan(s);
+        //printf("sign of zero: %d\n", MSIGN(zero));
+        n = scan(s);
 
 		p1 = pop();
 		check_stack();
@@ -43,13 +44,15 @@ run(char *s)
 
 		// if debug mode then print the source text
 
-		if (equaln(get_binding(symbol(TRACE)), 1)) {
+		/*
+        if (equaln(get_binding(symbol(TRACE)), 1)) {
 			for (i = 0; i < n; i++)
 				if (s[i] != '\r')
 					printchar(s[i]);
 			if (s[n - 1] != '\n') // n is not zero, see above
 				printchar('\n');
 		}
+         */
 
 		s += n;
 
@@ -74,7 +77,8 @@ run(char *s)
 			printline(p2);
 		else {
 #ifdef LINUX
-			display(p2);
+            //display(p2);
+			printline(p2);
 #else
 			push(p2);
 			cmdisplay();
@@ -106,7 +110,11 @@ echo_input(char *s)
 void
 top_level_eval(void)
 {
-	save();
+	
+    printstr("#### top level eval");
+    printstr("\n");
+
+    save();
 
 	trigmode = 0;
 

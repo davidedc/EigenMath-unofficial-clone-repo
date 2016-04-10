@@ -36,7 +36,17 @@ static char *input_str, *scan_str, *token_str, *token_buf;
 int
 scan(char *s)
 {
-	meta_mode = 0;
+    if (strcmp(s, "y=x\n") == 0)
+        ;
+        //printf("debug here\n");
+    if (strcmp(s, "y\n") == 0)
+        ;
+        //printf("debug here\n");
+    if (strcmp(s, "i=sqrt(-1)") == 0)
+        printf("debug here\n");
+
+    printf("#### scanning %s\n", s);
+    meta_mode = 0;
 	expanding++;
 	input_str = s;
 	scan_str = s;
@@ -432,13 +442,19 @@ build_tensor(int n)
 void
 get_next_token()
 {
-	newline_flag = 0;
+    char readableToken;
+    newline_flag = 0;
 	while (1) {
 		get_token();
+        readableToken = (char) token;
 		if (token != T_NEWLINE)
 			break;
 		newline_flag = 1;
 	}
+    printf("get_next_token token: %c\n", token);
+    if (token == ')')
+        ;
+    //printf("stop here");
 }
 
 void

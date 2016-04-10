@@ -60,7 +60,10 @@ transform(char **s)
 
 	while (*s) {
 
-		scan_meta(*s);
+        printstr("scanning table entry ");
+        printstr(*s);
+        printstr("\n");
+        scan_meta(*s);
 		p1 = pop();
 
 		A = cadr(p1);

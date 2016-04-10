@@ -18,6 +18,8 @@ main(int argc, char *argv[])
 {
 	int i;
 	FILE *f;
+    //printf(mstr(mdiv(mint(-100), mint(-66))));
+    //printf("\n");
 
 	for (i = 1; i < argc; i++) {
 		f = fopen(argv[i], "r");

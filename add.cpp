@@ -42,15 +42,27 @@ eval_add(void)
 
 /* Add n terms, returns one expression on the stack. */
 
+int stackAddsCounts = 0;
+
 void
 add_terms(int n)
 {
-	int i, h;
+    stackAddsCounts++;
+    int i, h;
 	U **s;
 
 	h = tos - n;
 
 	s = stack + h;
+
+    printf("stack before adding terms #%d\n", stackAddsCounts);
+    if (stackAddsCounts == 137)
+        printf("stop here");
+
+    for (i = 0; i < tos; i++) {
+        print1(stack[i]);
+        printstr("\n");
+    }
 
 	/* ensure no infinite loop, use "for" */
 
@@ -85,14 +97,29 @@ add_terms(int n)
 		cons();
 		break;
 	}
+
+    printf("stack after adding terms #%d\n", stackAddsCounts);
+    if (stackAddsCounts == 5)
+        printf("stop here");
+    for (i = 0; i < tos; i++) {
+        print1(stack[i]);
+        printstr("\n");
+    }
+
 }
 
 /* Compare terms for order, clobbers p1 and p2. */
+
+int cmp_terms_count = 0;
 
 int
 cmp_terms(const void *q1, const void *q2)
 {
 	int i, t;
+
+    cmp_terms_count++;
+    if (cmp_terms_count == 52)
+        printf("stop here");
 
 	p1 = *((U **) q1);
 	p2 = *((U **) q2);
@@ -101,23 +128,33 @@ cmp_terms(const void *q1, const void *q2)
 
 	if (isnum(p1) && isnum(p2)) {
 		flag = 1;
+        //printf("cmp_terms #%d returns 0\n", cmp_terms_count);
 		return 0;
 	}
 
 	/* congruent tensors can be combined */
 
 	if (istensor(p1) && istensor(p2)) {
-		if (p1->u.tensor->ndim < p2->u.tensor->ndim)
+        if (p1->u.tensor->ndim < p2->u.tensor->ndim){
+            //printf("cmp_terms #%d returns -1\n", cmp_terms_count);
 			return -1;
-		if (p1->u.tensor->ndim > p2->u.tensor->ndim)
+        }
+        if (p1->u.tensor->ndim > p2->u.tensor->ndim){
+            //printf("cmp_terms #%d returns 1\n", cmp_terms_count);
 			return 1;
+        }
 		for (i = 0; i < p1->u.tensor->ndim; i++) {
-			if (p1->u.tensor->dim[i] < p2->u.tensor->dim[i])
+            if (p1->u.tensor->dim[i] < p2->u.tensor->dim[i]){
+                //printf("cmp_terms #%d returns -1\n", cmp_terms_count);
 				return -1;
-			if (p1->u.tensor->dim[i] > p2->u.tensor->dim[i])
+            }
+            if (p1->u.tensor->dim[i] > p2->u.tensor->dim[i]){
+                //printf("cmp_terms #%d returns 1\n", cmp_terms_count);
 				return 1;
+            }
 		}
 		flag = 1;
+        ////printf("cmp_terms #%d returns 0");
 		return 0;
 	}
 
@@ -144,6 +181,7 @@ cmp_terms(const void *q1, const void *q2)
 	if (t == 0)
 		flag = 1;
 
+    //printf("cmp_terms #%d returns %d\n", cmp_terms_count, t);
 	return t;
 }
 

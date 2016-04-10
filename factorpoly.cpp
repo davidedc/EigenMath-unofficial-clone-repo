@@ -214,6 +214,9 @@ rationalize_coefficients(int h)
 	push(RESULT);
 	reciprocate();
 	RESULT = pop();
+    printstr("rationalize_coefficients result\n");
+    print1(RESULT);
+    printstr("\n");
 }
 
 static int
@@ -301,6 +304,7 @@ get_factor(void)
 
 			if (iszero(Q)) {
 				tos = h;
+                printstr("get_factor returning 1\n");
 				return 1;
 			}
 
@@ -332,6 +336,7 @@ get_factor(void)
 
 			if (iszero(Q)) {
 				tos = h;
+                printstr("get_factor returning 1\n");
 				return 1;
 			}
 		}
@@ -339,6 +344,7 @@ get_factor(void)
 
 	tos = h;
 
+    printstr("get_factor returning 0\n");
 	return 0;
 }
 
@@ -377,6 +383,10 @@ yydivpoly(void)
 		polycoeff[i - 1] = pop();
 	}
 	polycoeff[0] = Q;
+    printstr("yydivpoly Q:\n");
+    print1(p6);
+    printstr("\n");
+
 }
 
 static void
@@ -388,7 +398,10 @@ evalpoly(void)
 		push(Z);
 		multiply();
 		push(polycoeff[i]);
-		add();
+        printstr("Evalpoly top of stack:\n");
+        print1(stack[tos-i]);
+        printstr("\n");
+        add();
 	}
 	Q = pop();
 }

@@ -24,20 +24,38 @@
 U **frame, *stack[TOS];
 int tos;
 
+int nil_symbols = 0;
+
 void
 push(U *p)
 {
-	if (stack + tos >= frame)
+
+    //printf("pushing\n");
+    //print1(p);
+    //printf("\n");
+    
+
+    if (p == symbol(NIL)) {
+        nil_symbols++;
+        printf("pushing symbol(NIL) #%d\n", nil_symbols);
+        if (nil_symbols==111)
+            printf("stop here");
+    }
+    if (stack + tos >= frame)
 		stop("stack overflow");
 	stack[tos++] = p;
 }
 
+int popNum = 0;
 U *
 pop()
 {
-	if (tos == 0)
+    popNum++;
+    //printf("pop #%d\n",popNum);
+    if (tos == 0)
 		stop("stack underflow");
-	return stack[--tos];
+    U *elementToBeReturned = stack[--tos];
+    return elementToBeReturned;
 }
 
 void

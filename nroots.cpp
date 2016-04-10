@@ -7,6 +7,10 @@
 #define DELTA 1.0e-6
 #define EPSILON 1.0e-9
 #define ABS(z) sqrt((z).r * (z).r + (z).i * (z).i)
+
+//float theRandom = 0.0;
+//#define RANDOM (theRandom += 0.2)
+
 #define RANDOM (4.0 * (double) rand() / (double) RAND_MAX - 2.0)
 
 static struct {
@@ -152,7 +156,8 @@ findroot(int n)
 
 			compute_fa(n);
 
-			if (ABS(fa) < EPSILON)
+            printf("nrabs: %f\n",ABS(fa));
+            if (ABS(fa) < EPSILON)
 				return;
 
 			if (ABS(fa) < ABS(fb)) {

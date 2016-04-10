@@ -96,6 +96,12 @@ add_numbers(void)
 {
 	double a, b;
 
+    printstr("add_numbers adding numbers: ");
+    print1(stack[tos - 1]);
+    printstr(" and ");
+    print1(stack[tos - 2]);
+    printstr("\n");
+
 	if (isrational(stack[tos - 1]) && isrational(stack[tos - 2])) {
 		qadd();
 		return;
@@ -423,7 +429,8 @@ convert_bignum_to_double(unsigned int *p)
 {
 	int i;
 	double d = 0.0;
-	for (i = MLENGTH(p) - 1; i >= 0; i--)
+	// 4294967296 is 2^32
+    for (i = MLENGTH(p) - 1; i >= 0; i--)
 		d = 4294967296.0 * d + p[i];
 	if (MSIGN(p) == -1)
 		d = -d;
@@ -470,7 +477,8 @@ convert_rational_to_double(U *p)
 void
 push_integer(int n)
 {
-	save();
+	printf("pushing integer %d\n",n);
+    save();
 	p1 = alloc();
 	p1->k = NUM;
 	p1->u.q.a = mint(n);

@@ -119,7 +119,10 @@ yypower(void)
 	if (expanding && isadd(p1) && isnum(p2)) {
 		push(p2);
 		n = pop_integer();
-		if (n > 1) {
+        // this && n != 0x80000000 added by DDC
+        // as it's not always the case that 0x80000000
+        // is negative
+		if (n > 1 && n != 0x80000000) {
 			power_sum(n);
 			return;
 		}

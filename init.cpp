@@ -203,9 +203,17 @@ init(void)
 	one = pop();		// must be untagged in gc
 
 	push_symbol(POWER);
+    print1(stack[tos-1]);
+    printf("\n");
 	push_integer(-1);
+    print1(stack[tos-1]);
+    printf("\n");
 	push_rational(1, 2);
+    print1(stack[tos-1]);
+    printf("\n");
 	list(3);
+    print1(stack[tos-1]);
+    printf("\n");
 	imaginaryunit = pop();	// must be untagged in gc
 
 	defn();
@@ -233,7 +241,12 @@ defn(void)
 	int i, n;
 	n = sizeof defn_str / sizeof (char *);
 	for (i = 0; i < n; i++) {
-		scan(defn_str[i]);
+		//printf("scanning %s\n",defn_str[i]);
+        scan(defn_str[i]);
+        printf("... evaling %s\n", defn_str[i]);
+        printf("top of stack:\n");
+        print1(stack[tos-1]);
+        printf("\n");
 		eval();
 		pop();
 	}
